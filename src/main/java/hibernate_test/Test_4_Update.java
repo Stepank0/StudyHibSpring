@@ -1,13 +1,11 @@
-package hiernate_test;
+package hibernate_test;
 
-import hiernate_test.entity.Employee;
+import hibernate_test.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.List;
-
-public class Test3 {
+public class Test_4_Update {
     public static void main(String[] args) {
         SessionFactory factory = new Configuration()
                 .configure("hibernate.cfg.xml")
@@ -17,19 +15,13 @@ public class Test3 {
             Session session = factory.getCurrentSession();
             session.beginTransaction();
 
-//            List<Employee> employeeList = session.createQuery("from Employee")
-//                            .getResultList();
-            List<Employee> employeeList = session.createQuery("from Employee " +
-                            "where name = 'Stepan' AND  salary > 2000")
-                    .getResultList();
+//            Employee emp = session.get(Employee.class, 1);
+//            emp.setSalary(500);
 
-            for (Employee e : employeeList) {
-                System.out.println(e);
-            }
+            session.createQuery("update Employee set salary = 500 " +
+                    "where name = 'Stepan'").executeUpdate();
 
             session.getTransaction().commit();
-
-
             System.out.println("Done!");
         } finally {
             factory.close();
